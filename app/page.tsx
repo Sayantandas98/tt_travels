@@ -1,9 +1,12 @@
 import Link from "next/link"
-
+import { getServerSession } from "next-auth";
 import { siteConfig } from "@/config/site"
 import { buttonVariants } from "@/components/ui/button"
-
-export default function IndexPage() {
+import { authOptions } from "./api/auth/[...nextauth]/route";
+// import { LoginButton, LogoutButton } from "@/components/loginButton";
+export default async function IndexPage() {
+  const sss=await getServerSession(authOptions)
+  console.log(sss)
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
       <div className="flex max-w-[980px] flex-col items-start gap-2">
@@ -33,6 +36,10 @@ export default function IndexPage() {
         >
           GitHub
         </Link>
+        {/* <p>{JSON.stringify(sss)}</p> */}
+        <h1>{sss?.user?.name}</h1>
+        {/* <LoginButton/>
+        <LogoutButton/> */}
       </div>
     </section>
   )
